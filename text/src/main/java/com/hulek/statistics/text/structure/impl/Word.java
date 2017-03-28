@@ -7,10 +7,12 @@ import com.hulek.statistics.text.structure.exceptions.NotWordException;
  * @created: 2017-03-28.
  */
 public class Word extends SentencePart {
+    private static final String WHITESPACE = " ";
 
+    //should trim punctuations?
     public Word(String content) {
         super(content.toLowerCase().trim());
-        if (this.content.contains(" "))
+        if (this.content.contains(WHITESPACE))
             throw new NotWordException();
     }
 
