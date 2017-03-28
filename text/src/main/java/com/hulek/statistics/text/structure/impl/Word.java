@@ -1,6 +1,8 @@
 package com.hulek.statistics.text.structure.impl;
 
+import com.hulek.statistics.text.structure.exceptions.NotWordException;
 import com.hulek.statistics.text.structure.interfaces.AdvancedMatching;
+import com.hulek.statistics.text.structure.interfaces.RealLengthCalculator;
 
 import java.util.Map;
 import java.util.Set;
@@ -11,11 +13,14 @@ import java.util.stream.Collectors;
  * @author: Paweł Hulek
  * @created: 2017-03-28.
  */
-public class Word implements AdvancedMatching {
+public class Word implements AdvancedMatching, RealLengthCalculator {
     private final String content;
 
     public Word(String content) {
-        this.content = content.toLowerCase();
+        this.content = content.toLowerCase().trim();
+        if(this.content.contains(" "))
+            throw new NotWordException();
+
     }
 
     @Override
@@ -29,6 +34,7 @@ public class Word implements AdvancedMatching {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
+    @Override
     public int length() {
         return content.length();
     }
